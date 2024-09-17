@@ -14,16 +14,14 @@ if exist ..\esp-idf-v5.3 (
     REM Output an error message and exit the script
     echo Directory ..\esp-idf-v5.3 does not exist.
     echo Install ESP-idf v5.3 first. or use idf-tools.py install-idf
+    exit /b 1
 )
 
 REM Call the local export.bat script
 CALL export.bat
 
-REM Change to D: drive
-D:
-
-REM Open a new command prompt window
-cmd /k
-
 REM Return to the original directory
 CD /D "%ORIGINAL_DIR%"
+
+REM Keep the command prompt open for further use
+cmd
