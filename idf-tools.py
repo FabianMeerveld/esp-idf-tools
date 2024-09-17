@@ -4,20 +4,15 @@ import shutil
 import subprocess
 
 def install_idf():
-
-    # Get the directory of the current script
+    # Check if the ESP-IDF is already installed
     script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Get the parent directory of the script directory
     parent_dir = os.path.dirname(script_dir)
-
     if os.path.exists(os.path.join(parent_dir, "esp-idf-v5.3")):
         print("ESP-IDF is already installed.")
         return
 
     # Change the current working directory to the parent directory
     os.chdir(parent_dir)
-
     print(f"Changed working directory to {parent_dir}")
     
     # Define the ESP-IDF repository URL and branch
@@ -27,17 +22,11 @@ def install_idf():
 
     # Clone the ESP-IDF repository
     subprocess.run(["git", "clone", "-b", esp_idf_branch, "--recursive", esp_idf_repo_url, esp_idf_dir], check=True)
-
-    # Change directory to the ESP-IDF directory
     os.chdir(esp_idf_dir)
-
-    # Run the install.bat script
     subprocess.run(["install.bat"], check=True)
 
-        # Change directory to where uart.h is located
+    # Modify the uart.h file in the ESP-IDF
     uart_header_path = os.path.join(parent_dir, esp_idf_dir, "components", "esp_driver_uart", "include", "driver", "uart.h")
-    
-    # Modify the uart.h file
     modify_uart_header(uart_header_path)
 
     print("Testting the installation")
@@ -49,7 +38,6 @@ def modify_uart_header(file_path):
     with open(file_path, 'r') as file:
         content = file.readlines()
 
-    # Define the lines to add
     lines_to_add = [
         "    };\n",
         "    struct \n",
@@ -88,7 +76,7 @@ def add_component(arg):
     components_folder = "components"
     if not os.path.exists(components_folder):
         os.makedirs(components_folder)
-        print(f"Created 'components' folder.")
+        print(f"Created 'components' folder.")s
 
     # Check if the argument is a Git URL or a file path
     if arg.startswith("http://") or arg.startswith("https://") or arg.startswith("git@"):
