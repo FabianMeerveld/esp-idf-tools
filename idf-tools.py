@@ -76,7 +76,7 @@ def add_component(arg):
     components_folder = "components"
     if not os.path.exists(components_folder):
         os.makedirs(components_folder)
-        print(f"Created 'components' folder.")s
+        print(f"Created 'components' folder.")
 
     # Check if the argument is a Git URL or a file path
     if arg.startswith("http://") or arg.startswith("https://") or arg.startswith("git@"):
